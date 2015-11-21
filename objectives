@@ -1,0 +1,12 @@
+os.loadAPI("log")
+
+log.init()
+
+local ae2 = peripheral.wrap("left")
+
+local items = ae2.getAvailableItems()
+for item in pairs(items) do
+	log.debug(items[item])
+end
+
+log.close()

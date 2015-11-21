@@ -1,0 +1,18 @@
+local log
+
+function init()
+	log = fs.open("debug.log","w")
+end
+
+function debug(str)
+	log.writeLine(str)
+	log.flush()
+end
+
+function newLine()
+	log.writeLine()
+end
+
+function close()
+	log.close()
+end
