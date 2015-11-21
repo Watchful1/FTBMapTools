@@ -1,12 +1,44 @@
 local log
+local logLevel
 
-function init()
+function init(level)
+	logLevel = level
 	log = fs.open("debug.log","w")
 end
 
+function parse(str)
+	if type(str) == "table" then
+		return textutils.serialize(str)
+	elseif type(str) == "string" then
+		return str
+	else
+		return "Unable to print type: "..type(str)
+	end
+end
+
+function write(logStr,str)
+	if str ~= nil then
+		log.writeLine("["..logStr.."] "..parse(str))
+		log.flush()
+	end
+end
+
+function info(str)
+	if logLevel >= 2 then
+		write("info",str)
+	end
+end
+
 function debug(str)
-	log.writeLine(str)
-	log.flush()
+	if logLevel >= 1 then
+		write("debug",str)
+	end
+end
+
+function error(str)
+	if logLevel >= 0 then
+		write("error",str)
+	end
 end
 
 function newLine()

@@ -1,0 +1,43 @@
+local levels = {}
+
+function split(str, sep)
+	strs = {}
+	for word in string.gmatch(str, "([^"..sep.."]+)") do
+	    table.insert(strs, word)
+	end
+	return strs
+end
+
+function parseGoal(goalLine)
+	goal = {}
+	items = split(goalLine,"\|")
+	goal["in"] = items[1]
+	goal["out"] = items[2]
+	return goal
+end
+
+function loadLevel(levelName)
+	file = "levels/"..levelName
+	if not fs.exists(file) then
+		log.error("File doesn't exist: "..file)
+		return
+	end
+
+	levelFile = fs.open(file,"r")
+
+	goals = {}
+	while true do
+		line = levelFile.readLine()
+		if line == nil then break end
+		goal = parseGoal(line)
+		table.insert(goals, goal)
+	end
+
+	for i,item in ipairs(goals) do
+		log.info("In: "..item["in"].." Out: "..item["out"])
+	end
+end
+
+function giveReward(rewardItem)
+	return
+end

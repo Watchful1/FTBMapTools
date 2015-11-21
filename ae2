@@ -1,0 +1,23 @@
+local controller
+
+function init(side)
+	controller = peripheral.wrap(side)
+end
+
+function getItems()
+	itemArray = controller.getAvailableItems()
+	items = {}
+	for i,item in ipairs(itemArray) do
+		table.insert(items,item["fingerprint"]["id"])
+	end
+	return items
+end
+
+function containsItem(itemName)
+	local items = getItems()
+	for i,item in ipairs(items) do
+		if item == itemName then
+			log.debug(item)
+		end
+	end
+end

@@ -1,12 +1,15 @@
+-- initialize
 os.loadAPI("log")
+log.init(2)
+log.debug("Initializing")
 
-log.init()
+os.loadAPI("ae2")
+ae2.init("left")
 
-local ae2 = peripheral.wrap("left")
+os.loadAPI("scripts")
 
-local items = ae2.getAvailableItems()
-for item in pairs(items) do
-	log.debug(items[item])
-end
+-- body
+scripts.loadLevel("easy")
 
+-- cleanup
 log.close()
