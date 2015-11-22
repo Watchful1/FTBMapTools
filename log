@@ -9,10 +9,8 @@ end
 function parse(str)
 	if type(str) == "table" then
 		return textutils.serialize(str)
-	elseif type(str) == "string" then
-		return str
 	else
-		return "Unable to print type: "..type(str)
+		return str
 	end
 end
 

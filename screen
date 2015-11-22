@@ -1,0 +1,69 @@
+local mon
+
+function init(side)
+	if not peripheral.isPresent(side) then
+		log.error("Screen side not present: "..side)
+		return false
+	end
+	mon = peripheral.wrap(side)
+	mon.clear()
+	mon.setTextScale(2)
+	mon.setTextScale(1)
+	term.redirect(mon)
+	return true
+end
+
+function writeInPane(str, pane, xStart, yStart, foreground, background)
+	if not utils.inBox(pane,xStart,yStart) then
+		log.error("Point not in box, can't print")
+	end
+
+	term.setCursorPos(xStart,yStart)
+
+	if foreground ~= nil then
+		term.setTextColor(foreground)
+	end
+	if background ~= nil then
+		term.setBackgroundColor(background)
+	end
+
+	length = string.len(str)
+	availableLength = pane[3]-xStart
+
+	i=1
+	while true do
+		lastSpace = utils.findLastSpace(string.sub(str, i, i+availableLength))
+		if lastSpace == nil then
+			lastSpace = i+availableLength
+		else
+			lastSpace = lastSpace + i
+		end
+
+		currentStr = string.sub(str, i, lastSpace-1)
+		log.debug(str.."::"..string.len(str))
+		log.debug("  Sub: "..string.sub(str, i, i+availableLength))
+		log.debug("  Current: "..currentStr)
+		log.debug("  i: "..i)
+		log.debug("  last: "..lastSpace)
+		log.debug("  i+avail: "..i+availableLength)
+		term.write(currentStr)
+
+		if i > string.len(str) then
+			break
+		end
+		i = lastSpace + 1
+
+		yStart = yStart + 1
+		if yStart > pane[4] then
+			break
+		end
+		term.setCursorPos(xStart,yStart)
+	end
+
+	term.setTextColor(colors.white)
+	term.setBackgroundColor(colors.black)
+end
+
+function close()
+	term.setBackgroundColor(colors.black)
+end

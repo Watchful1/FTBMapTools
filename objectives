@@ -8,8 +8,18 @@ ae2.init("left")
 
 os.loadAPI("scripts")
 
+os.loadAPI("screen")
+screen.init("monitor_3")
+
+os.loadAPI("utils")
+
 -- body
-scripts.loadLevel("easy")
+--scripts.loadLevel("easy")
+local pane = {5,5,20,20}
+paintutils.drawBox(4,4,21,21,colors.blue)
+term.setBackgroundColor(colors.black)
+screen.writeInPane("abc def ghi jkl mno pqr stu",pane,8,12)
 
 -- cleanup
 log.close()
+screen.close()

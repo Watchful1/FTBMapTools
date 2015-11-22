@@ -1,0 +1,8 @@
+function inBox(boxArray,x,y)
+	return ((x >= boxArray[1]) and (x <= boxArray[3]) and (y >= boxArray[2]) and (y <= boxArray[4]))
+end
+
+function findLastSpace(haystack)
+    local i=string.find(haystack," [^ ]*$")
+    if i==nil then return nil else return i-1 end
+end
