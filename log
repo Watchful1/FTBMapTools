@@ -21,6 +21,12 @@ function write(logStr,str)
 	end
 end
 
+function fine(str)
+	if logLevel >= 3 then
+		write("fine",str)
+	end
+end
+
 function info(str)
 	if logLevel >= 2 then
 		write("info",str)

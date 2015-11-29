@@ -11,8 +11,9 @@ end
 function parseGoal(goalLine)
 	goal = {}
 	items = split(goalLine,"\|")
-	goal["in"] = items[1]
-	goal["out"] = items[2]
+	goal["name"] = items[1]
+	goal["in"] = items[2]
+	goal["out"] = items[3]
 	return goal
 end
 
@@ -22,6 +23,7 @@ function loadLevel(levelName)
 		log.error("File doesn't exist: "..file)
 		return
 	end
+	log.fine("Loading level: "..levelName)
 
 	levelFile = fs.open(file,"r")
 
@@ -30,11 +32,24 @@ function loadLevel(levelName)
 		line = levelFile.readLine()
 		if line == nil then break end
 		goal = parseGoal(line)
+		log.fine("  Name: "..goal["name"].." In: "..goal["in"].." Out: "..goal["out"])
 		table.insert(goals, goal)
 	end
 
-	for i,item in ipairs(goals) do
-		log.info("In: "..item["in"].." Out: "..item["out"])
+	return goals
+end
+
+function loadLevels()
+	files = fs.list("levels")
+	if table.getn(files) == 0 then
+		log.error("No levels available")
+		return
+	end
+
+	for i,item in ipairs(files) do
+		level = loadLevel(item)
+		log.info(item.." loaded with "..table.getn(level).." goals")
+		levels[item] = level
 	end
 end
 
