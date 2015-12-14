@@ -1,3 +1,5 @@
+--lua
+--logging api
 local log
 local logLevel
 

@@ -1,3 +1,5 @@
+--lua
+--load and interface with scipts
 local levels = {}
 
 function split(str, sep)
@@ -50,6 +52,15 @@ function loadLevels()
 		level = loadLevel(item)
 		log.info(item.." loaded with "..table.getn(level).." goals")
 		levels[item] = level
+	end
+end
+
+function displayLevel(levelName)
+	level = levels[levelName]
+	xSize,ySize = screen.getSize()
+	for i,objective in ipairs(level) do
+		y = 2+(i-1)*2
+		screen.writeInPane(i..". "..objective["name"], {3,y,xSize-1,y}, 3, y)
 	end
 end
 

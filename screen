@@ -1,3 +1,5 @@
+--lua
+--monitor api
 local mon
 
 function init(side)
@@ -33,19 +35,20 @@ function writeInPane(str, pane, xStart, yStart, foreground, background)
 	i=1
 	while true do
 		lastSpace = utils.findLastSpace(string.sub(str, i, i+availableLength))
-		if lastSpace == nil then
+		if lastSpace == nil or availableLength > lastSpace then
 			lastSpace = i+availableLength
 		else
 			lastSpace = lastSpace + i
 		end
 
 		currentStr = string.sub(str, i, lastSpace-1)
-		log.debug(str.."::"..string.len(str))
-		log.debug("  Sub: "..string.sub(str, i, i+availableLength))
-		log.debug("  Current: "..currentStr)
-		log.debug("  i: "..i)
-		log.debug("  last: "..lastSpace)
-		log.debug("  i+avail: "..i+availableLength)
+		log.fine(str.."::"..string.len(str))
+		log.fine("  Sub: "..string.sub(str, i, i+availableLength))
+		log.fine("  Current: "..currentStr)
+		log.fine("  i: "..i)
+		log.fine("  last: "..lastSpace)
+		log.fine("  i+avail: "..i+availableLength)
+
 		term.write(currentStr)
 
 		if i > string.len(str) then
@@ -62,6 +65,10 @@ function writeInPane(str, pane, xStart, yStart, foreground, background)
 
 	term.setTextColor(colors.white)
 	term.setBackgroundColor(colors.black)
+end
+
+function getSize()
+	return term.getSize()
 end
 
 function close()

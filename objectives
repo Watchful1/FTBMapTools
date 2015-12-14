@@ -1,3 +1,4 @@
+--lua
 -- initialize
 os.loadAPI("log")
 log.init(2)
@@ -15,6 +16,7 @@ os.loadAPI("utils")
 
 -- body
 scripts.loadLevels()
+scripts.displayLevel("easy")
 
 -- cleanup
 log.close()

@@ -1,3 +1,5 @@
+--lua
+--AE2 interface
 local controller
 
 function init(side)
